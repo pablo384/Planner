@@ -19,7 +19,7 @@ class TodoRepository {
         .map(
           (e) => Todo(
             id: e.id,
-            name: e.name,
+            title: e.title,
             category: e.category,
             when: e.when,
             isCompleted: e.isCompleted,

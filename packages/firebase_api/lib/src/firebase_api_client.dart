@@ -15,14 +15,14 @@ class TodoListNotFoundFailure implements Exception {}
 final List<Todo> todoList = [
   Todo(
     id: 123,
-    name: 'First Todo 🥳',
+    title: 'First Todo 🥳',
     category: 'Fun',
     when: DateTime.now(),
     isCompleted: false,
   ),
   Todo(
     id: 1234,
-    name: 'First Todo 🥳',
+    title: 'First Todo 🥳',
     category: 'Fun',
     when: DateTime.now(),
     isCompleted: false,

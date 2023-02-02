@@ -6,8 +6,8 @@ part 'todo.g.dart';
 @JsonSerializable()
 class Todo extends Equatable {
   const Todo({
-    required this.id,
-    required this.name,
+    this.id,
+    required this.title,
     required this.category,
     required this.when,
     this.isCompleted = false,
@@ -18,7 +18,7 @@ class Todo extends Equatable {
   factory Todo.fromRepository(todo_repository.Todo todo) {
     return Todo(
       id: todo.id,
-      name: todo.name,
+      title: todo.title,
       category: todo.category,
       when: todo.when,
       isCompleted: todo.isCompleted,
@@ -33,9 +33,9 @@ class Todo extends Equatable {
 
   Map<String, dynamic> toJson() => _$TodoToJson(this);
 
-  final int id;
+  final int? id;
   final bool isCompleted;
-  final String name;
+  final String title;
   final String category;
   final DateTime when;
 
@@ -43,14 +43,14 @@ class Todo extends Equatable {
 
   @override
   String toString() {
-    return '$id,$name,$category';
+    return '$id,$title,$category';
   }
 
   @override
   List<Object?> get props => [
         id,
         isCompleted,
-        name,
+        title,
         category,
         when,
       ];
@@ -58,13 +58,13 @@ class Todo extends Equatable {
   Todo copyWith({
     int? id,
     bool? isCompleted,
-    String? name,
+    String? title,
     String? category,
     DateTime? when,
   }) {
     return Todo(
       id: id ?? this.id,
-      name: name ?? this.name,
+      title: title ?? this.title,
       category: category ?? this.category,
       when: when ?? this.when,
       isCompleted: isCompleted ?? this.isCompleted,

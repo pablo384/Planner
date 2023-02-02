@@ -32,7 +32,7 @@ class TodoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                todo.name,
+                todo.title,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: todo.isCompleted ? Colors.black45 : null,
                     ),

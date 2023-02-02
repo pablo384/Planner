@@ -29,7 +29,7 @@ void main() {
 
     group('getTodoList', () {
       const id = 1234;
-      const name = 'Todo name';
+      const title = 'Todo title';
       const category = 'Funny Things';
       final mocWhen = DateTime.now();
 
@@ -52,7 +52,7 @@ void main() {
       test('returns correct TodoList on success', () async {
         final todo = MockTodo();
         when(() => todo.id).thenReturn(id);
-        when(() => todo.name).thenReturn(name);
+        when(() => todo.title).thenReturn(title);
         when(() => todo.category).thenReturn(category);
         when(() => todo.when).thenReturn(mocWhen);
         when(() => todoApiClient.getTodoList()).thenAnswer(
@@ -64,7 +64,7 @@ void main() {
           actual[0],
           Todo(
             id: id,
-            name: name,
+            title: title,
             category: category,
             when: mocWhen,
           ),

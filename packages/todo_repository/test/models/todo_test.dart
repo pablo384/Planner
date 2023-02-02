@@ -6,7 +6,7 @@ void main() {
     test('can be (de)serialized', () {
       final todo = Todo(
         id: 1234,
-        name: 'Work',
+        title: 'Work',
         category: 'Funny things 😂',
         when: DateTime.now(),
       );

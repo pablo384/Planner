@@ -1,25 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todo_cubit.dart';
+part of 'todo_form_cubit.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TodoState _$TodoStateFromJson(Map<String, dynamic> json) => TodoState(
+TodoFormState _$TodoFormStateFromJson(Map<String, dynamic> json) =>
+    TodoFormState(
       status: $enumDecodeNullable(_$TodoStatusEnumMap, json['status']) ??
           TodoStatus.initial,
-      todoList: (json['todoList'] as List<dynamic>?)
-          ?.map((e) => Todo.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      todo: json['todo'] == null
+          ? null
+          : Todo.fromJson(json['todo'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$TodoStateToJson(TodoState instance) => <String, dynamic>{
+Map<String, dynamic> _$TodoFormStateToJson(TodoFormState instance) =>
+    <String, dynamic>{
       'status': _$TodoStatusEnumMap[instance.status]!,
-      'date': instance.date.toIso8601String(),
-      'todoList': instance.todoList,
+      'todo': instance.todo,
     };
 
 const _$TodoStatusEnumMap = {
