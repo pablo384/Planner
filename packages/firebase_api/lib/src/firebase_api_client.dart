@@ -26,12 +26,12 @@ class FirebaseApiClient {
 
   /// Get a list [Todo] `/documents/tasks`.
   Future<List<Todo>> getTodoList() async {
-    final locationRequest = Uri.https(
+    final todoRequest = Uri.https(
       _baseUrlTodoApp,
       '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
     );
 
-    final todoListResponse = await _httpClient.get(locationRequest);
+    final todoListResponse = await _httpClient.get(todoRequest);
 
     if (todoListResponse.statusCode != 200) {
       throw TodoRequestFailure();
