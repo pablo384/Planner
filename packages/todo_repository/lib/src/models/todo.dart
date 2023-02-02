@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'todo.g.dart';
 
 @JsonSerializable()
-class Todo {
+class Todo extends Equatable {
   const Todo({
     required this.id,
     required this.name,
@@ -13,6 +14,8 @@ class Todo {
   });
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TodoToJson(this);
 
   static List<Todo> fromJsonList(List<dynamic> list) =>
       list.map((e) => Todo.fromJson(e as Map<String, dynamic>)).toList();
@@ -24,7 +27,11 @@ class Todo {
   final DateTime when;
 
   @override
-  String toString() {
-    return '$id,$name,$category';
-  }
+  List<Object?> get props => [
+        id,
+        isCompleted,
+        name,
+        category,
+        when,
+      ];
 }
