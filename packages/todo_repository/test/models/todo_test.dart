@@ -5,7 +5,7 @@ void main() {
   group('Weather', () {
     test('can be (de)serialized', () {
       final todo = Todo(
-        id: 1234,
+        id: '1234',
         title: 'Work',
         category: 'Funny things 😂',
         when: DateTime.now(),

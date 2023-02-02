@@ -20,10 +20,14 @@ class Todo extends Equatable {
   static List<Todo> fromJsonList(List<dynamic> list) =>
       list.map((e) => Todo.fromJson(e as Map<String, dynamic>)).toList();
 
-  final int? id;
+  final String? id;
+  @JsonKey(name: 'isCompleted')
   final bool isCompleted;
+  @JsonKey(name: 'name')
   final String title;
+  @JsonKey(name: 'categoryId')
   final String category;
+  @JsonKey(name: 'date')
   final DateTime when;
 
   @override

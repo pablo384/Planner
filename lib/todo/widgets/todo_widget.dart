@@ -27,23 +27,31 @@ class TodoWidget extends StatelessWidget {
                   )
             },
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                todo.title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: todo.isCompleted ? Colors.black45 : null,
-                    ),
-              ),
-              Text(
-                todo.category,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.black45,
-                    ),
-              ),
-            ],
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  todo.title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: todo.isCompleted ? Colors.black45 : null,
+                      ),
+                ),
+                Text(
+                  todo.category,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.black45,
+                      ),
+                ),
+                Text(
+                  '${todo.when.toLocal()}',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.black45,
+                      ),
+                ),
+              ],
+            ),
           )
         ],
       ),

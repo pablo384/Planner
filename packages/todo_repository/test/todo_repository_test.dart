@@ -28,7 +28,7 @@ void main() {
     });
 
     group('getTodoList', () {
-      const id = 1234;
+      const id = '1234';
       const title = 'Todo title';
       const category = 'Funny Things';
       final mocWhen = DateTime.now();
@@ -55,6 +55,7 @@ void main() {
         when(() => todo.title).thenReturn(title);
         when(() => todo.category).thenReturn(category);
         when(() => todo.when).thenReturn(mocWhen);
+        when(() => todo.isCompleted).thenReturn(false);
         when(() => todoApiClient.getTodoList()).thenAnswer(
           (_) async => [todo],
         );

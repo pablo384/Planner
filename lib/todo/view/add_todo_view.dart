@@ -52,6 +52,12 @@ class _TodoFormWidgetState extends State<TodoFormWidget> {
     super.dispose();
   }
 
+  String? dateValidator(String? val) {
+    if (val == null || DateTime.tryParse(val) == null) {
+      return 'Please input a correct date format';
+    }
+  }
+
   String? validator(String? val) {
     if (val == null || val.isEmpty) return 'This field is required';
     return null;
@@ -88,12 +94,28 @@ class _TodoFormWidgetState extends State<TodoFormWidget> {
             ),
             TextFormField(
               keyboardType: TextInputType.datetime,
-              validator: validator,
+              enabled: true,
+              validator: dateValidator,
+              onTap: () async {
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(), //get today's date
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2101),
+                );
+              },
               decoration: InputDecoration(
                 labelText: 'When',
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.calendar_month_outlined),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(), //get today's date
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2101),
+                    );
+                  },
                 ),
                 // errorText: state.username.invalid ? 'invalid username' : null,
               ),

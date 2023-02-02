@@ -88,18 +88,26 @@ class TodoPopulated extends StatelessWidget {
   final Function onRefresh;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        HeaderWidget(
-          date: state.date,
-          completedCount: state.completedTodo.length,
-          incompleteCount: state.incompleteTodo.length,
+    return RefreshIndicator(
+      onRefresh: () async {
+        // ignore: avoid_dynamic_calls
+        return await onRefresh();
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            HeaderWidget(
+              date: state.date,
+              completedCount: state.completedTodo.length,
+              incompleteCount: state.incompleteTodo.length,
+            ),
+            TodoSectionWidget(
+              completedTodo: state.completedTodo,
+              incompleteTodo: state.incompleteTodo,
+            ),
+          ],
         ),
-        TodoSectionWidget(
-          completedTodo: state.completedTodo,
-          incompleteTodo: state.incompleteTodo,
-        ),
-      ],
+      ),
     );
   }
 }

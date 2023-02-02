@@ -33,10 +33,14 @@ class Todo extends Equatable {
 
   Map<String, dynamic> toJson() => _$TodoToJson(this);
 
-  final int? id;
+  final String? id;
+  @JsonKey(name: 'isCompleted')
   final bool isCompleted;
+  @JsonKey(name: 'name')
   final String title;
+  @JsonKey(name: 'categoryId')
   final String category;
+  @JsonKey(name: 'date')
   final DateTime when;
 
   bool get isNotCompleted => !isCompleted;
@@ -56,7 +60,7 @@ class Todo extends Equatable {
       ];
 
   Todo copyWith({
-    int? id,
+    String? id,
     bool? isCompleted,
     String? title,
     String? category,
