@@ -25,7 +25,7 @@ class FirebaseApiClient {
   final http.Client _httpClient;
 
   /// Get a list [Todo] `/documents/tasks`.
-  Future<List<Todo>> getTodoList() async {
+  Future<List<Todo>> getTodoList({DateTime? date}) async {
     final todoRequest = Uri.https(
       _baseUrlTodoApp,
       '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',

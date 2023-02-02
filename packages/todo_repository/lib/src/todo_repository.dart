@@ -10,8 +10,10 @@ class TodoRepository {
 
   final FirebaseApiClient _todoApiClient;
 
-  Future<List<Todo>> getTodoList() async {
-    final todoList = await _todoApiClient.getTodoList();
+  Future<List<Todo>> getTodoList({DateTime? date}) async {
+    final todoList = await _todoApiClient.getTodoList(
+      date: date,
+    );
     return todoList
         .map(
           (e) => Todo(

@@ -17,7 +17,9 @@ class TodoCubit extends HydratedCubit<TodoState> {
 
     try {
       final todos = Todo.fromRepositoryList(
-        await _todoRepository.getTodoList(),
+        await _todoRepository.getTodoList(
+          date: state.date,
+        ),
       );
 
       emit(
@@ -37,7 +39,9 @@ class TodoCubit extends HydratedCubit<TodoState> {
 
     try {
       final todos = Todo.fromRepositoryList(
-        await _todoRepository.getTodoList(),
+        await _todoRepository.getTodoList(
+          date: state.date,
+        ),
       );
 
       emit(
