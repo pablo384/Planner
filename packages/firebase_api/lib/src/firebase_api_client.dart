@@ -13,8 +13,6 @@ class TodoRequestFailure implements Exception {}
 /// Exception thrown when the provided Todo List is not found.
 class TodoListNotFoundFailure implements Exception {}
 
-final List<Todo> todoList = [];
-
 /// {@template firebase_todo_api_client}
 /// Dart API Client which wraps the [Firebase Todo API](https://firestore.googleapis.com/v1/projects/applaudo-todo-app/databases/).
 /// {@endtemplate}
@@ -62,7 +60,7 @@ class FirebaseApiClient {
     return Todo.fromJsonListResponse(results);
   }
 
-  Future<void> postUpdateTodo({required Todo todo}) async {
+  Future<void> patchUpdateTodo({required Todo todo}) async {
     final todoRequest = Uri.https(
       _baseUrlTodoApp,
       '/v1/${todo.id}',
@@ -82,6 +80,21 @@ class FirebaseApiClient {
   }
 
   Future<void> postAddTodo({required Todo todo}) async {
-    todoList.add(todo);
+    final todoRequest = Uri.https(
+      _baseUrlTodoApp,
+      '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
+      {
+        'key': _apiKey,
+      },
+    );
+    final todoResponse = await _httpClient.patch(
+      todoRequest,
+      headers: _headers,
+      body: json.encode(todo.parseToJsonRequest()),
+    );
+
+    if (todoResponse.statusCode != 200) {
+      throw TodoRequestFailure();
+    }
   }
 }

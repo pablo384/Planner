@@ -29,9 +29,9 @@ class TodoRepository {
         .toList();
   }
 
-  Future<void> postUpdateTodo({required Todo todo}) async {
+  Future<void> patchUpdateTodo({required Todo todo}) async {
     final parsedTodo = firebase_api.Todo.fromJson(todo.toJson());
-    await _todoApiClient.postUpdateTodo(todo: parsedTodo);
+    await _todoApiClient.patchUpdateTodo(todo: parsedTodo);
   }
 
   Future<void> postAddTodo({required Todo todo}) async {

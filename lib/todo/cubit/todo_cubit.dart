@@ -36,7 +36,7 @@ class TodoCubit extends HydratedCubit<TodoState> {
 
   Future<void> updateTodo(Todo todo) async {
     try {
-      await _todoRepository.postUpdateTodo(
+      await _todoRepository.patchUpdateTodo(
         todo: todo_repository.Todo.fromJson(
           todo.toJson(),
         ),
