@@ -29,14 +29,16 @@ class TodoState extends Equatable {
       .toList();
 
   @override
-  List<Object?> get props => [status, todoList];
+  List<Object?> get props => [status, date, todoList];
 
   TodoState copyWith({
     TodoStatus? status,
+    DateTime? date,
     List<Todo>? todoList,
   }) {
     return TodoState(
       status: status ?? this.status,
+      date: date ?? this.date,
       todoList: todoList ?? this.todoList,
     );
   }

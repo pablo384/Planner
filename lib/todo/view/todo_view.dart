@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:planner_app/todo/cubit/todo_cubit.dart';
-import 'package:planner_app/todo/models/todo.dart';
 import 'package:planner_app/todo/view/add_todo_view.dart';
 
 import 'package:planner_app/todo/widgets/header_widget.dart';
@@ -69,8 +67,7 @@ class _TodoViewState extends State<TodoView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // await Navigator.of(context).push(AddTodoPage.route());
-          await context.read<TodoCubit>().refreshTodoList();
+          await Navigator.of(context).push(AddTodoPage.route());
         },
         child: const Icon(
           Icons.add,

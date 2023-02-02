@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:planner_app/todo/cubit/todo_cubit.dart';
 import 'package:planner_app/todo/models/todo.dart';
 
 class TodoWidget extends StatelessWidget {
@@ -18,7 +19,13 @@ class TodoWidget extends StatelessWidget {
         children: [
           Checkbox(
             value: todo.isCompleted,
-            onChanged: (bool? val) => {},
+            onChanged: (bool? val) => {
+              context.read<TodoCubit>().updateTodo(
+                    todo.copyWith(
+                      isCompleted: val,
+                    ),
+                  )
+            },
           ),
           Column(
             mainAxisSize: MainAxisSize.min,

@@ -12,6 +12,23 @@ class TodoRequestFailure implements Exception {}
 /// Exception thrown when the provided Todo List is not found.
 class TodoListNotFoundFailure implements Exception {}
 
+final List<Todo> todoList = [
+  Todo(
+    id: 123,
+    name: 'First Todo 🥳',
+    category: 'Fun',
+    when: DateTime.now(),
+    isCompleted: false,
+  ),
+  Todo(
+    id: 1234,
+    name: 'First Todo 🥳',
+    category: 'Fun',
+    when: DateTime.now(),
+    isCompleted: false,
+  ),
+];
+
 /// {@template firebase_todo_api_client}
 /// Dart API Client which wraps the [Firebase Todo API](https://firestore.googleapis.com/v1/projects/applaudo-todo-app/databases/).
 /// {@endtemplate}
@@ -26,25 +43,46 @@ class FirebaseApiClient {
 
   /// Get a list [Todo] `/documents/tasks`.
   Future<List<Todo>> getTodoList({DateTime? date}) async {
-    final todoRequest = Uri.https(
-      _baseUrlTodoApp,
-      '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
-    );
+    // final todoRequest = Uri.https(
+    //   _baseUrlTodoApp,
+    //   '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
+    // );
 
-    final todoListResponse = await _httpClient.get(todoRequest);
+    // final todoListResponse = await _httpClient.get(todoRequest);
 
-    if (todoListResponse.statusCode != 200) {
-      throw TodoRequestFailure();
-    }
+    // if (todoListResponse.statusCode != 200) {
+    //   throw TodoRequestFailure();
+    // }
 
-    final todoListJson = jsonDecode(todoListResponse.body) as Map;
+    // final todoListJson = jsonDecode(todoListResponse.body) as Map;
 
-    if (!todoListJson.containsKey('results')) throw TodoListNotFoundFailure();
+    // if (!todoListJson.containsKey('results')) throw TodoListNotFoundFailure();
 
-    final results = todoListJson['results'] as List;
+    // final results = todoListJson['results'] as List;
 
-    if (results.isEmpty) throw TodoListNotFoundFailure();
+    // if (results.isEmpty) throw TodoListNotFoundFailure();
 
-    return Todo.fromJsonList(results);
+    await Future.delayed(Duration(seconds: 1));
+    return todoList;
+    // return Todo.fromJsonList(results);
+  }
+
+  Future<void> postUpdateTodo({required Todo todo}) async {
+    // final todoRequest = Uri.https(
+    //   _baseUrlTodoApp,
+    //   '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
+    // );
+
+    // final todoListResponse = await _httpClient.get(todoRequest);
+
+    // if (todoListResponse.statusCode != 200) {
+    //   throw TodoRequestFailure();
+    // }
+    todoList.removeWhere((element) => element.id == todo.id);
+    todoList.add(todo);
+  }
+
+  Future<void> postAddTodo({required Todo todo}) async {
+    todoList.add(todo);
   }
 }

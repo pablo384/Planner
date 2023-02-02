@@ -3,6 +3,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:planner_app/todo/models/models.dart';
 import 'package:todo_repository/todo_repository.dart' hide Todo;
+import 'package:todo_repository/todo_repository.dart' as todo_repository;
 
 part 'todo_cubit.g.dart';
 part 'todo_state.dart';
@@ -30,6 +31,28 @@ class TodoCubit extends HydratedCubit<TodoState> {
       );
     } on Exception {
       emit(state.copyWith(status: TodoStatus.failure));
+    }
+  }
+
+  Future<void> updateTodo(Todo todo) async {
+    try {
+      await _todoRepository.postUpdateTodo(
+        todo: todo_repository.Todo.fromJson(
+          todo.toJson(),
+        ),
+      );
+      await refreshTodoList();
+    } on Exception {
+      emit(state);
+    }
+  }
+
+  Future<void> setSelectedDate(DateTime selectedDate) async {
+    try {
+      emit(state.copyWith(date: selectedDate));
+      await fetchTodoList();
+    } on Exception {
+      emit(state);
     }
   }
 

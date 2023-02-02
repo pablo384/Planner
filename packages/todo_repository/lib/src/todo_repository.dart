@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_api/firebase_api.dart' hide Todo;
+import 'package:firebase_api/firebase_api.dart' as firebase_api;
 
 import 'package:todo_repository/todo_repository.dart';
 
@@ -25,5 +26,15 @@ class TodoRepository {
           ),
         )
         .toList();
+  }
+
+  Future<void> postUpdateTodo({required Todo todo}) async {
+    final parsedTodo = firebase_api.Todo.fromJson(todo.toJson());
+    await _todoApiClient.postUpdateTodo(todo: parsedTodo);
+  }
+
+  Future<void> postAddTodo({required Todo todo}) async {
+    final parsedTodo = firebase_api.Todo.fromJson(todo.toJson());
+    await _todoApiClient.postAddTodo(todo: parsedTodo);
   }
 }

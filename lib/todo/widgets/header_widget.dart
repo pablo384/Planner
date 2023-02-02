@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
+import 'package:planner_app/todo/cubit/todo_cubit.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
@@ -27,14 +30,19 @@ class HeaderWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      showDatePicker(
+                    onTap: () async {
+                      final selectedDate = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(), //get today's date
-                        firstDate: DateTime
-                            .now(), //DateTime.now() - not to allow to choose before today.
+                        firstDate: DateTime.now(),
                         lastDate: DateTime(2101),
                       );
+                      if (selectedDate != null) {
+                        // ignore: use_build_context_synchronously
+                        await context.read<TodoCubit>().setSelectedDate(
+                              selectedDate,
+                            );
+                      }
                     },
                     child: Row(
                       children: [
