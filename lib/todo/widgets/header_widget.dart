@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
     super.key,
     required this.date,
+    required this.completedCount,
+    required this.incompleteCount,
   });
 
-  final String date;
+  final DateTime date;
+  final int completedCount;
+  final int incompleteCount;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class HeaderWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -34,7 +39,7 @@ class HeaderWidget extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          date,
+                          DateFormat.yMMMMd().format(date),
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium
@@ -50,7 +55,9 @@ class HeaderWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Text("5 incomplete, 5 completed"),
+                  Text(
+                    '$incompleteCount incomplete, $completedCount completed',
+                  ),
                 ],
               ),
               const CircleAvatar(

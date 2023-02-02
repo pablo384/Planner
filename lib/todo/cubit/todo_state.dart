@@ -5,13 +5,28 @@ class TodoState extends Equatable {
   TodoState({
     this.status = TodoStatus.initial,
     List<Todo>? todoList,
-  }) : todoList = todoList ?? [];
+    DateTime? date,
+  })  : todoList = todoList ?? [],
+        date = date ?? DateTime.now();
 
   factory TodoState.fromJson(Map<String, dynamic> json) =>
       _$TodoStateFromJson(json);
 
   final TodoStatus status;
+  final DateTime date;
   final List<Todo> todoList;
+
+  List<Todo> get completedTodo => todoList
+      .where(
+        (todo) => todo.isCompleted,
+      )
+      .toList();
+
+  List<Todo> get incompleteTodo => todoList
+      .where(
+        (todo) => !todo.isCompleted,
+      )
+      .toList();
 
   @override
   List<Object?> get props => [status, todoList];

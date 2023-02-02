@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/todo/models/todo.dart';
 import 'package:planner_app/todo/widgets/todo_widget.dart';
 
 class TodoSectionWidget extends StatelessWidget {
   const TodoSectionWidget({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
+    super.key,
+    required this.completedTodo,
+    required this.incompleteTodo,
+  });
 
-  final String title;
+  final List<Todo> completedTodo;
+  final List<Todo> incompleteTodo;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +19,31 @@ class TodoSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          'Incomplete',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
-        const TodoWidget()
+        ...incompleteTodo
+            .map(
+              (e) => TodoWidget(
+                todo: e,
+              ),
+            )
+            .toList(),
+        Text(
+          'Completed',
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        ...completedTodo
+            .map(
+              (e) => TodoWidget(
+                todo: e,
+              ),
+            )
+            .toList(),
       ],
     );
   }

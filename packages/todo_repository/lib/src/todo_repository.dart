@@ -14,8 +14,13 @@ class TodoRepository {
     final todoList = await _todoApiClient.getTodoList();
     return todoList
         .map(
-          (e) =>
-              Todo(id: e.id, name: e.name, category: e.category, when: e.when),
+          (e) => Todo(
+            id: e.id,
+            name: e.name,
+            category: e.category,
+            when: e.when,
+            isCompleted: e.isCompleted,
+          ),
         )
         .toList();
   }

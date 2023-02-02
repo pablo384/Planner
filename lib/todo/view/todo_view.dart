@@ -41,29 +41,29 @@ class _TodoViewState extends State<TodoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: BlocConsumer<TodoCubit, TodoState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                switch (state.status) {
-                  case TodoStatus.initial:
-                    return const TodoEmpty();
-                  case TodoStatus.loading:
-                    return const TodoLoading();
-                  case TodoStatus.success:
-                    return TodoPopulated(
-                      todoList: state.todoList,
-                      onRefresh: () {
-                        return context.read<TodoCubit>().refreshTodoList();
-                      },
-                    );
-                  case TodoStatus.failure:
-                    return const TodoError();
-                }
-              },
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: BlocConsumer<TodoCubit, TodoState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              switch (state.status) {
+                case TodoStatus.initial:
+                  return TodoEmpty(
+                    state: state,
+                  );
+                case TodoStatus.loading:
+                  return const TodoLoading();
+                case TodoStatus.success:
+                  return TodoPopulated(
+                    state: state,
+                    onRefresh: () {
+                      return context.read<TodoCubit>().refreshTodoList();
+                    },
+                  );
+                case TodoStatus.failure:
+                  return const TodoError();
+              }
+            },
           ),
         ),
       ),
@@ -83,36 +83,50 @@ class _TodoViewState extends State<TodoView> {
 class TodoPopulated extends StatelessWidget {
   const TodoPopulated({
     super.key,
-    required this.todoList,
+    required this.state,
     required this.onRefresh,
   });
 
-  final List<Todo> todoList;
+  final TodoState state;
   final Function onRefresh;
   @override
   Widget build(BuildContext context) {
-    final date = DateFormat.yMMMMd().format(DateTime.now());
     return Column(
       children: [
-        HeaderWidget(date: date),
-        const TodoSectionWidget(
-          title: 'Incomplete',
+        HeaderWidget(
+          date: state.date,
+          completedCount: state.completedTodo.length,
+          incompleteCount: state.incompleteTodo.length,
         ),
-        ...todoList.map((e) => Text(e.name)).toList(),
+        TodoSectionWidget(
+          completedTodo: state.completedTodo,
+          incompleteTodo: state.incompleteTodo,
+        ),
       ],
     );
   }
 }
 
 class TodoEmpty extends StatelessWidget {
-  const TodoEmpty({super.key});
+  const TodoEmpty({
+    super.key,
+    required this.state,
+  });
+
+  final TodoState state;
 
   @override
   Widget build(BuildContext context) {
-    // final date = DateFormat.yMMMMd().format(DateTime.now());
     return Column(
-      children: const [
-        Text('Empty'),
+      children: [
+        HeaderWidget(
+          date: state.date,
+          completedCount: 0,
+          incompleteCount: 0,
+        ),
+        const Text(
+          "You don't have todos for today",
+        )
       ],
     );
   }

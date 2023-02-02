@@ -39,6 +39,8 @@ class Todo extends Equatable {
   final String category;
   final DateTime when;
 
+  bool get isNotCompleted => !isCompleted;
+
   @override
   String toString() {
     return '$id,$name,$category';
