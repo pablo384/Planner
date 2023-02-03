@@ -17,4 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Gallery
 
-![alt text] (assets/planner.gif)
+![alt text](https://github.com/pablo384/Planner/blob/main/assets/planner.gif)
+![alt text](https://github.com/pablo384/Planner/blob/main/assets/Simulator%20Screen%20Shot%20-%20iPhone%2014%20Pro%20Max%20-%202023-02-03%20at%2000.14.39.png)
+![alt text](https://github.com/pablo384/Planner/blob/main/assets/Simulator%20Screen%20Shot%20-%20iPhone%2014%20Pro%20Max%20-%202023-02-03%20at%2000.14.48.png)
+![alt text](https://github.com/pablo384/Planner/blob/main/assets/Simulator%20Screen%20Shot%20-%20iPhone%2014%20Pro%20Max%20-%202023-02-03%20at%2000.15.14.png)
+![alt text](https://github.com/pablo384/Planner/blob/main/assets/Simulator%20Screen%20Shot%20-%20iPhone%2014%20Pro%20Max%20-%202023-02-03%20at%2000.15.21.png)
