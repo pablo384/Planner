@@ -15,9 +15,11 @@ class PlannerApp extends StatelessWidget {
       create: (context) => _todoRepository,
       child: MaterialApp(
         title: 'Planner',
-        home: Builder(builder: (context) {
-          return const TodoPage();
-        }),
+        home: Builder(
+          builder: (context) {
+            return const TodoPage();
+          },
+        ),
       ),
     );
   }

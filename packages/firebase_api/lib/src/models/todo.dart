@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_dynamic_calls
 
-import 'dart:developer';
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'todo.g.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:planner_app/todo/cubit/todo_cubit.dart';
 import 'package:planner_app/todo/models/todo.dart';
 

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:planner_app/todo/cubit/todo_cubit.dart';
 import 'package:planner_app/todo/cubit/todo_form_cubit.dart';
 
 class TodoFormWidget extends StatefulWidget {

@@ -32,52 +32,53 @@ class _TodoViewState extends State<TodoView> {
   @override
   void initState() {
     super.initState();
-    context.read<TodoCubit>().fetchTodoList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: BlocConsumer<TodoCubit, TodoState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              switch (state.status) {
-                case TodoStatus.initial:
-                  return TodoEmpty(
-                    state: state,
-                  );
-                case TodoStatus.loading:
-                  return const TodoLoading();
-                case TodoStatus.success:
-                  if (state.todoList.isEmpty) {
+    return MaterialApp(
+      home: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: BlocConsumer<TodoCubit, TodoState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                switch (state.status) {
+                  case TodoStatus.initial:
                     return TodoEmpty(
                       state: state,
                     );
-                  }
-                  return TodoPopulated(
-                    state: state,
-                    onRefresh: () {
-                      return context.read<TodoCubit>().refreshTodoList();
-                    },
-                  );
-                case TodoStatus.failure:
-                  return TodoError(
-                    onRefresh: context.read<TodoCubit>().fetchTodoList,
-                  );
-              }
-            },
+                  case TodoStatus.loading:
+                    return const TodoLoading();
+                  case TodoStatus.success:
+                    if (state.todoList.isEmpty) {
+                      return TodoEmpty(
+                        state: state,
+                      );
+                    }
+                    return TodoPopulated(
+                      state: state,
+                      onRefresh: () {
+                        return context.read<TodoCubit>().refreshTodoList();
+                      },
+                    );
+                  case TodoStatus.failure:
+                    return TodoError(
+                      onRefresh: context.read<TodoCubit>().fetchTodoList,
+                    );
+                }
+              },
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.of(context).push(AddTodoPage.route());
-        },
-        child: const Icon(
-          Icons.add,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await Navigator.of(context).push(AddTodoPage.route());
+          },
+          child: const Icon(
+            Icons.add,
+          ),
         ),
       ),
     );
