@@ -41,7 +41,7 @@ class Todo {
       'name': {'stringValue': title},
       'categoryId': {'stringValue': category},
       'isCompleted': {'booleanValue': isCompleted},
-      'date': {'stringValue': when.millisecondsSinceEpoch.toString()},
+      'date': {'integerValue': when.millisecondsSinceEpoch.toString()},
     };
     return {'fields': fields};
   }
@@ -51,6 +51,7 @@ class Todo {
 
   static List<Todo> fromJsonListResponse(List<dynamic> list) {
     return list
+        .where((e) => e['fields'] != null)
         .map((e) => Todo.parseJsonResponse(e as Map<String, dynamic>))
         .toList();
   }

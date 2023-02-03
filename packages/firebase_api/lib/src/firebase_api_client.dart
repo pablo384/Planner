@@ -26,7 +26,7 @@ class FirebaseApiClient {
   static const _headers = {
     'Content-Type': 'application/json',
     'Authorization':
-        'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVhNTA5ZjAxOWY3MGQ3NzlkODBmMTUyZDFhNWQzMzgxMWFiN2NlZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYXBwbGF1ZG8tdG9kby1hcHAiLCJhdWQiOiJhcHBsYXVkby10b2RvLWFwcCIsImF1dGhfdGltZSI6MTY3NTM2NzAwOCwidXNlcl9pZCI6IllWM1BkRTRlenZkcUl3dlU5RGVFdFhXZDN4QzMiLCJzdWIiOiJZVjNQZEU0ZXp2ZHFJd3ZVOURlRXRYV2QzeEMzIiwiaWF0IjoxNjc1MzY3MDA4LCJleHAiOjE2NzUzNzA2MDgsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0ZXN0QHRlc3QuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.nhHyGZEHyF6qDomqYRf_Jt4sJ9xn0ip57zxKLa9CIrnCxa52xphPTBKaNnXzy3MCM4DLji7gNUupt3ZUvueOYM4tslpIY-INqcRiln1JvdOS4GFcA2zkBIBmYOiy5P81rs78UKGV5bry9TZBtYQtOktZCIRXz7mOkE-_XYDhZuf7X2PSTz5z7Q0gMfIWYsSrLujpAMdUpJKGc6Tv45brpvdkTH_ks2KkD7u4MVzB6tqBuUopQHdb5OHRTBd0ge0RSrecrUd0wPYilhrwdClTGOaf8se3oc8ADM3nCt8KV-lcJCYuH-nhLCyd3b4ArAvvpSeiSBzZRAiafOR7yDru9w',
+        'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVhNTA5ZjAxOWY3MGQ3NzlkODBmMTUyZDFhNWQzMzgxMWFiN2NlZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYXBwbGF1ZG8tdG9kby1hcHAiLCJhdWQiOiJhcHBsYXVkby10b2RvLWFwcCIsImF1dGhfdGltZSI6MTY3NTM5NDQzOSwidXNlcl9pZCI6IllWM1BkRTRlenZkcUl3dlU5RGVFdFhXZDN4QzMiLCJzdWIiOiJZVjNQZEU0ZXp2ZHFJd3ZVOURlRXRYV2QzeEMzIiwiaWF0IjoxNjc1Mzk0NDM5LCJleHAiOjE2NzUzOTgwMzksImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0ZXN0QHRlc3QuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.YQuDp-bQE29ijYcJciKm7a1jBQkt1kWOiW2BdC_4wnHEBYsTrkek9MChUuqcc66MpSq7IH1XDis6flx3Iwm5W3_q1C9mm2oYMrydKSMGTZxpYikjSXNWEA7l43qKGYZRgKIUQpAusGRSqitxo2D5OJ-nIt-2SQXtkucCrBiM8_UUQxflIJJfEa9sk_At7nMSvcH7BMznpDj9vKVttSlmCD4Jh2YEOEhfgSc8oGQD_wa5i4A3kWMnxEbZUxPz032P4qOZRnl1WM-w67o-KUjw0oUgZxnxkBoM9yhaMbgF9n3CArrK8yRImAA0beKZBzDFdpl1w5DFn6L500NeRafOwQ',
   };
 
   final http.Client _httpClient;
@@ -38,6 +38,7 @@ class FirebaseApiClient {
       '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
       {
         'key': _apiKey,
+        'pageSize': '100000',
       },
     );
 
@@ -57,7 +58,12 @@ class FirebaseApiClient {
     final results = todoListJson['documents'] as List;
     if (results.isEmpty) throw TodoListNotFoundFailure();
 
-    return Todo.fromJsonListResponse(results);
+    return Todo.fromJsonListResponse(results)
+        .where(
+          // ignore: avoid_bool_literals_in_conditional_expressions
+          (todoItem) => date != null ? todoItem.when.isSameDate(date) : true,
+        )
+        .toList();
   }
 
   Future<void> patchUpdateTodo({required Todo todo}) async {
@@ -87,7 +93,8 @@ class FirebaseApiClient {
         'key': _apiKey,
       },
     );
-    final todoResponse = await _httpClient.patch(
+
+    final todoResponse = await _httpClient.post(
       todoRequest,
       headers: _headers,
       body: json.encode(todo.parseToJsonRequest()),
@@ -96,5 +103,11 @@ class FirebaseApiClient {
     if (todoResponse.statusCode != 200) {
       throw TodoRequestFailure();
     }
+  }
+}
+
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
   }
 }

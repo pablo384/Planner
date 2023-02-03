@@ -33,7 +33,7 @@ class HeaderWidget extends StatelessWidget {
                     onTap: () async {
                       final selectedDate = await showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(), //get today's date
+                        initialDate: date, //get today's date
                         firstDate: DateTime.now(),
                         lastDate: DateTime(2101),
                       );

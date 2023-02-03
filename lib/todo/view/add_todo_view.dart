@@ -1,6 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:planner_app/todo/cubit/todo_form_cubit.dart';
+import 'package:planner_app/todo/widgets/todo_form_widget.dart';
+import 'package:todo_repository/todo_repository.dart';
 
 class AddTodoPage extends StatefulWidget {
   const AddTodoPage({super.key});
@@ -18,122 +20,15 @@ class AddTodoPage extends StatefulWidget {
 class _AddTodoPageState extends State<AddTodoPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('To go back'),
-        centerTitle: false,
-      ),
-      body: const SafeArea(
-        child: TodoFormWidget(),
-      ),
-    );
-  }
-}
-
-class TodoFormWidget extends StatefulWidget {
-  const TodoFormWidget({
-    super.key,
-  });
-
-  @override
-  State<TodoFormWidget> createState() => _TodoFormWidgetState();
-}
-
-class _TodoFormWidgetState extends State<TodoFormWidget> {
-  final TextEditingController _textTitleController = TextEditingController();
-  final TextEditingController _textCategoryController = TextEditingController();
-  final TextEditingController _textDateController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    _textTitleController.dispose();
-    _textCategoryController.dispose();
-    _textDateController.dispose();
-    super.dispose();
-  }
-
-  String? dateValidator(String? val) {
-    if (val == null || DateTime.tryParse(val) == null) {
-      return 'Please input a correct date format';
-    }
-  }
-
-  String? validator(String? val) {
-    if (val == null || val.isEmpty) return 'This field is required';
-    return null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'New Task',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Title',
-                // errorText: state.username.invalid ? 'invalid username' : null,
-              ),
-              validator: validator,
-            ),
-            TextFormField(
-              validator: validator,
-              decoration: const InputDecoration(
-                labelText: 'Category',
-                // errorText: state.username.invalid ? 'invalid username' : null,
-              ),
-            ),
-            TextFormField(
-              keyboardType: TextInputType.datetime,
-              enabled: true,
-              validator: dateValidator,
-              onTap: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(), //get today's date
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2101),
-                );
-              },
-              decoration: InputDecoration(
-                labelText: 'When',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.calendar_month_outlined),
-                  onPressed: () async {
-                    final selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(), //get today's date
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2101),
-                    );
-                  },
-                ),
-                // errorText: state.username.invalid ? 'invalid username' : null,
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      log('Valid Form');
-                    }
-                  },
-                  child: const Text('Add'),
-                ),
-              ),
-            )
-          ],
+    return BlocProvider(
+      create: (context) => TodoFormCubit(context.read<TodoRepository>()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('To go back'),
+          centerTitle: false,
+        ),
+        body: const SafeArea(
+          child: TodoFormWidget(),
         ),
       ),
     );

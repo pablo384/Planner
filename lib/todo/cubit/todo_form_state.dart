@@ -18,6 +18,8 @@ class TodoFormState extends Equatable {
   final TodoStatus status;
   final Todo todo;
 
+  String get dateToShow => DateFormat.yMd().format(todo.when);
+
   @override
   List<Object?> get props => [status, todo];
 

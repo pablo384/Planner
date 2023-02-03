@@ -52,6 +52,11 @@ class _TodoViewState extends State<TodoView> {
                 case TodoStatus.loading:
                   return const TodoLoading();
                 case TodoStatus.success:
+                  if (state.todoList.isEmpty) {
+                    return TodoEmpty(
+                      state: state,
+                    );
+                  }
                   return TodoPopulated(
                     state: state,
                     onRefresh: () {
@@ -59,7 +64,9 @@ class _TodoViewState extends State<TodoView> {
                     },
                   );
                 case TodoStatus.failure:
-                  return const TodoError();
+                  return TodoError(
+                    onRefresh: context.read<TodoCubit>().fetchTodoList,
+                  );
               }
             },
           ),
@@ -130,7 +137,7 @@ class TodoEmpty extends StatelessWidget {
           incompleteCount: 0,
         ),
         const Text(
-          "You don't have todos for today",
+          "You don't have TODO for this day",
         )
       ],
     );
@@ -149,12 +156,29 @@ class TodoLoading extends StatelessWidget {
 }
 
 class TodoError extends StatelessWidget {
-  const TodoError({super.key});
-
+  const TodoError({
+    super.key,
+    required this.onRefresh,
+  });
+  final Future<void> Function() onRefresh;
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Op!'),
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Ops!'),
+            ElevatedButton(
+              onPressed: onRefresh,
+              child: const Text(
+                'Refresh',
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -7,6 +7,7 @@
         {
             "name": "planner_app",
             "request": "launch",
+            "program": "lib/main.dart",
             "type": "dart"
         },
         {
@@ -23,40 +24,35 @@
         },
         {
             "name": "firebase_api",
-            "cwd": "packages/firebase_api",
             "request": "launch",
+            "program": "lib/main.dart",
             "type": "dart"
         },
         {
             "name": "firebase_api (profile mode)",
-            "cwd": "packages/firebase_api",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "firebase_api (release mode)",
-            "cwd": "packages/firebase_api",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
         {
             "name": "todo_repository",
-            "cwd": "packages/todo_repository",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "todo_repository (profile mode)",
-            "cwd": "packages/todo_repository",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "todo_repository (release mode)",
-            "cwd": "packages/todo_repository",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
