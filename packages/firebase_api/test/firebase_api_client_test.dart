@@ -33,11 +33,7 @@ void main() {
     group('getTodoList', () {
       const baseUrlTodoApp = 'firestore.googleapis.com';
       const apiKey = 'AIzaSyAFZ2uyHiPuQQi_4wf8cUQpdMEMqGapq_Q';
-      const headers = {
-        'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVhNTA5ZjAxOWY3MGQ3NzlkODBmMTUyZDFhNWQzMzgxMWFiN2NlZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYXBwbGF1ZG8tdG9kby1hcHAiLCJhdWQiOiJhcHBsYXVkby10b2RvLWFwcCIsImF1dGhfdGltZSI6MTY3NTM2NzAwOCwidXNlcl9pZCI6IllWM1BkRTRlenZkcUl3dlU5RGVFdFhXZDN4QzMiLCJzdWIiOiJZVjNQZEU0ZXp2ZHFJd3ZVOURlRXRYV2QzeEMzIiwiaWF0IjoxNjc1MzY3MDA4LCJleHAiOjE2NzUzNzA2MDgsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0ZXN0QHRlc3QuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.nhHyGZEHyF6qDomqYRf_Jt4sJ9xn0ip57zxKLa9CIrnCxa52xphPTBKaNnXzy3MCM4DLji7gNUupt3ZUvueOYM4tslpIY-INqcRiln1JvdOS4GFcA2zkBIBmYOiy5P81rs78UKGV5bry9TZBtYQtOktZCIRXz7mOkE-_XYDhZuf7X2PSTz5z7Q0gMfIWYsSrLujpAMdUpJKGc6Tv45brpvdkTH_ks2KkD7u4MVzB6tqBuUopQHdb5OHRTBd0ge0RSrecrUd0wPYilhrwdClTGOaf8se3oc8ADM3nCt8KV-lcJCYuH-nhLCyd3b4ArAvvpSeiSBzZRAiafOR7yDru9w',
-      };
+      const headers = <String, String>{};
       test('makes correct http request', () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
@@ -53,6 +49,7 @@ void main() {
               '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
               {
                 'key': apiKey,
+                'pageSize': '100000',
               },
             ),
             headers: headers,
@@ -70,6 +67,7 @@ void main() {
               '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
               {
                 'key': apiKey,
+                'pageSize': '100000',
               },
             ),
             headers: headers,
@@ -92,6 +90,7 @@ void main() {
               '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
               {
                 'key': apiKey,
+                'pageSize': '100000',
               },
             ),
             headers: headers,
@@ -114,6 +113,7 @@ void main() {
               '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
               {
                 'key': apiKey,
+                'pageSize': '100000',
               },
             ),
             headers: headers,
@@ -161,6 +161,7 @@ void main() {
               '/v1/projects/applaudo-todo-app/databases/(default)/documents/tasks',
               {
                 'key': apiKey,
+                'pageSize': '100000',
               },
             ),
             headers: headers,

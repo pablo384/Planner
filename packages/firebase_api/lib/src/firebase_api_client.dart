@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_api/firebase_api.dart';
 import 'package:http/http.dart' as http;
@@ -23,11 +23,16 @@ class FirebaseApiClient {
 
   static const _baseUrlTodoApp = 'firestore.googleapis.com';
   static const _apiKey = 'AIzaSyAFZ2uyHiPuQQi_4wf8cUQpdMEMqGapq_Q';
-  static const _headers = {
-    'Content-Type': 'application/json',
-    'Authorization':
-        'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVhNTA5ZjAxOWY3MGQ3NzlkODBmMTUyZDFhNWQzMzgxMWFiN2NlZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYXBwbGF1ZG8tdG9kby1hcHAiLCJhdWQiOiJhcHBsYXVkby10b2RvLWFwcCIsImF1dGhfdGltZSI6MTY3NTM5NDQzOSwidXNlcl9pZCI6IllWM1BkRTRlenZkcUl3dlU5RGVFdFhXZDN4QzMiLCJzdWIiOiJZVjNQZEU0ZXp2ZHFJd3ZVOURlRXRYV2QzeEMzIiwiaWF0IjoxNjc1Mzk0NDM5LCJleHAiOjE2NzUzOTgwMzksImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0ZXN0QHRlc3QuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.YQuDp-bQE29ijYcJciKm7a1jBQkt1kWOiW2BdC_4wnHEBYsTrkek9MChUuqcc66MpSq7IH1XDis6flx3Iwm5W3_q1C9mm2oYMrydKSMGTZxpYikjSXNWEA7l43qKGYZRgKIUQpAusGRSqitxo2D5OJ-nIt-2SQXtkucCrBiM8_UUQxflIJJfEa9sk_At7nMSvcH7BMznpDj9vKVttSlmCD4Jh2YEOEhfgSc8oGQD_wa5i4A3kWMnxEbZUxPz032P4qOZRnl1WM-w67o-KUjw0oUgZxnxkBoM9yhaMbgF9n3CArrK8yRImAA0beKZBzDFdpl1w5DFn6L500NeRafOwQ',
-  };
+  static Map<String, String> get _headers {
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      return {};
+    }
+    return {
+      'Content-Type': 'application/json',
+      'Authorization':
+          'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVhNTA5ZjAxOWY3MGQ3NzlkODBmMTUyZDFhNWQzMzgxMWFiN2NlZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYXBwbGF1ZG8tdG9kby1hcHAiLCJhdWQiOiJhcHBsYXVkby10b2RvLWFwcCIsImF1dGhfdGltZSI6MTY3NTM5NDQzOSwidXNlcl9pZCI6IllWM1BkRTRlenZkcUl3dlU5RGVFdFhXZDN4QzMiLCJzdWIiOiJZVjNQZEU0ZXp2ZHFJd3ZVOURlRXRYV2QzeEMzIiwiaWF0IjoxNjc1Mzk0NDM5LCJleHAiOjE2NzUzOTgwMzksImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0ZXN0QHRlc3QuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.YQuDp-bQE29ijYcJciKm7a1jBQkt1kWOiW2BdC_4wnHEBYsTrkek9MChUuqcc66MpSq7IH1XDis6flx3Iwm5W3_q1C9mm2oYMrydKSMGTZxpYikjSXNWEA7l43qKGYZRgKIUQpAusGRSqitxo2D5OJ-nIt-2SQXtkucCrBiM8_UUQxflIJJfEa9sk_At7nMSvcH7BMznpDj9vKVttSlmCD4Jh2YEOEhfgSc8oGQD_wa5i4A3kWMnxEbZUxPz032P4qOZRnl1WM-w67o-KUjw0oUgZxnxkBoM9yhaMbgF9n3CArrK8yRImAA0beKZBzDFdpl1w5DFn6L500NeRafOwQ',
+    };
+  }
 
   final http.Client _httpClient;
 
